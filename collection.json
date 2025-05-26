@@ -1,0 +1,549 @@
+{
+    "info": {
+        "_postman_id": "e8f2e3a1-5a5b-4c8e-9d8a-5a3c9b2c1d8a",
+        "name": "Content Scheduler API",
+        "description": "API collection for Content Scheduler - a social media content scheduling application",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Authentication",
+            "description": "Authentication related endpoints",
+            "item": [
+                {
+                    "name": "Register",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Test User\",\n    \"email\": \"test@example.com\",\n    \"password\": \"password\",\n    \"password_confirmation\": \"password\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/register",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "register"]
+                        },
+                        "description": "Register a new user"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Login",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"test@example.com\",\n    \"password\": \"password\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/login",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "login"]
+                        },
+                        "description": "Log in a user"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Logout",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{authToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/logout",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "logout"]
+                        },
+                        "description": "Log out the authenticated user"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "User Profile",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{authToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/user",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "user"]
+                        },
+                        "description": "Get authenticated user details"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Posts",
+            "description": "Post management endpoints",
+            "item": [
+                {
+                    "name": "List Posts",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{authToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/posts?platform=&status=&search=&page=1",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "posts"],
+                            "query": [
+                                {
+                                    "key": "platform",
+                                    "value": "",
+                                    "description": "Filter by platform name"
+                                },
+                                {
+                                    "key": "status",
+                                    "value": "",
+                                    "description": "Filter by status (scheduled, published, draft, failed)"
+                                },
+                                {
+                                    "key": "search",
+                                    "value": "",
+                                    "description": "Search term in title or content"
+                                },
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "Page number for pagination"
+                                }
+                            ]
+                        },
+                        "description": "List all posts for the authenticated user with optional filters"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Single Post",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{authToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/posts/1",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "posts", "1"]
+                        },
+                        "description": "Get a single post by ID"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Post",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{authToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "multipart/form-data",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "title",
+                                    "value": "Sample Post",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "content",
+                                    "value": "This is a sample post content.",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "platform",
+                                    "value": "twitter",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "scheduled_time",
+                                    "value": "2025-06-01 12:30:00",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "status",
+                                    "value": "scheduled",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "image_url",
+                                    "type": "file",
+                                    "src": []
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/posts",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "posts"]
+                        },
+                        "description": "Create a new post"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Post",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{authToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "multipart/form-data",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "_method",
+                                    "value": "PUT",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "title",
+                                    "value": "Updated Post",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "content",
+                                    "value": "This post has been updated.",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "platform",
+                                    "value": "twitter",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "scheduled_time",
+                                    "value": "2025-06-01 14:30:00",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "status",
+                                    "value": "scheduled",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "image_url",
+                                    "type": "file",
+                                    "src": []
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/posts/1",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "posts", "1"]
+                        },
+                        "description": "Update an existing post"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Post",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{authToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/posts/1",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "posts", "1"]
+                        },
+                        "description": "Delete a post"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Platforms",
+            "description": "Platform management endpoints",
+            "item": [
+                {
+                    "name": "List Available Platforms",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{authToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/platforms",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "platforms"]
+                        },
+                        "description": "Get all available platforms"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "List User Platforms",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{authToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/user/platforms",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "user", "platforms"]
+                        },
+                        "description": "Get platforms connected to the current user"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Toggle User Platform",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{authToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/platforms/1/toggle",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "platforms", "1", "toggle"]
+                        },
+                        "description": "Toggle a platform's active status for the user (activate/deactivate/add)"
+                    },
+                    "response": [
+                        {
+                            "name": "Activate Platform",
+                            "originalRequest": {},
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [],
+                            "body": "{\n  \"message\": \"Platform Twitter has been activated\",\n  \"is_active\": true\n}"
+                        },
+                        {
+                            "name": "Deactivate Platform",
+                            "originalRequest": {},
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [],
+                            "body": "{\n  \"message\": \"Platform Twitter has been deactivated\",\n  \"is_active\": false\n}"
+                        },
+                        {
+                            "name": "Add Platform",
+                            "originalRequest": {},
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [],
+                            "body": "{\n  \"message\": \"Platform Twitter has been added and activated\",\n  \"is_active\": true\n}"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [""]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [""]
+            }
+        }
+    ],
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://127.0.0.1:8000",
+            "type": "string"
+        },
+        {
+            "key": "authToken",
+            "value": "YOUR_AUTH_TOKEN",
+            "type": "string"
+        }
+    ]
+}
